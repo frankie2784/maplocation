@@ -220,19 +220,6 @@ trackUserLocation: true
 
 map.addControl(geolocate);
 
-function getresponse(URL) {
-	$.ajax({
-						type: "GET",
-					 url: URL,
-						dataType: "jsonp",
-					 error: function (response) {
-										alert('Error: There was a problem processing your request, please refresh the browser and try again');
-						},
-						success: function (response) {
-				console.log(response);
-					 }
-		});
-}
 
 geolocate.on('geolocate', function(e) {
       var lon = e.coords.longitude;
