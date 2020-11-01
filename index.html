@@ -237,7 +237,9 @@ function getresponse(URL) {
 geolocate.on('geolocate', function(e) {
       var lon = e.coords.longitude;
       var lat = e.coords.latitude
-			document.getElementById('info').innerHTML = getresponse('https://api.what3words.com/v3/convert-to-3wa?coordinates=${lon}%2C${lat}&key=3J3ARWE5');
+			fetch(`https://api.what3words.com/v3/convert-to-3wa?coordinates=${lon}%2C${lat}&key=3J3ARWE5`).then(function(data) {
+				document.getElementById('info').innerHTML = data;
+			});
 });
 
 // map.on('mousemove', function (e) {
