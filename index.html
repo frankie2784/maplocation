@@ -224,8 +224,10 @@ map.addControl(geolocate);
 geolocate.on('geolocate', function(e) {
       var lon = e.coords.longitude;
       var lat = e.coords.latitude
-			fetch(`https://api.what3words.com/v3/convert-to-3wa?coordinates=${lon}%2C${lat}&key=3J3ARWE5`).then(function(data) {
-				document.getElementById('info').innerHTML = data;
+			fetch(`https://api.what3words.com/v3/convert-to-3wa?coordinates=${lat}%2C${lon}&key=3J3ARWE5`)
+				.then((resp) => resp.json())
+				.then(function(data) {
+				document.getElementById('info').innerHTML = '('+lon+', '+lat+') / '+data.words;
 			});
 });
 
