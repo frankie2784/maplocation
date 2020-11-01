@@ -10,6 +10,21 @@
 	body { margin: 0; padding: 0; }
 	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
 </style>
+<style type="text/css">
+#info {
+display: block;
+position: relative;
+margin: 0px auto;
+width: 50%;
+padding: 10px;
+border: none;
+border-radius: 3px;
+font-size: 12px;
+text-align: center;
+color: #222;
+background: #fff;
+}
+</style>
 </head>
 <body>
 	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
@@ -39,6 +54,7 @@
 	</style>
 
 <div id="map"></div>
+<pre id="info"></pre>
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 
@@ -195,15 +211,27 @@ markerDiv.addEventListener('mouseleave', () => new_marker.togglePopup());
 
 
 // Add geolocate control to the map.
-map.addControl(
-new mapboxgl.GeolocateControl({
+var geolocate = new mapboxgl.GeolocateControl({
 positionOptions: {
 enableHighAccuracy: true
 },
 trackUserLocation: true
-})
-);
+});
 
+map.addControl(geolocate);
+
+geolocate.on('geolocate', function(e) {
+      var lon = e.coords.longitude;
+      var lat = e.coords.latitude
+      var position = [lon, lat];
+			document.getElementById('info').innerHTML = position;
+});
+
+// map.on('mousemove', function (e) {
+// document.getElementById('info').innerHTML = JSON.stringify(position);
+// // e.point is the x, y coordinates of the mousemove event relative
+// // to the top-left corner of the map
+// });
 // map.addControl(
 // new MapboxDirections({
 // accessToken: mapboxgl.accessToken
